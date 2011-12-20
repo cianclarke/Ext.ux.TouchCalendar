@@ -197,8 +197,12 @@ Ext.ux.TouchCalendarView = Ext.extend(Ext.DataView, {
 					'<tr>',
 					'<tpl for=".">',
 					
-						'<td class="time-block {[this.getClasses(values)]}" datetime="{[this.me.getDateAttribute(values.date)]}">',
-							'{date:date("j")}',
+						'<td class="time-block {color} {holiday} {[this.getClasses(values)]}" datetime="{[this.me.getDateAttribute(values.date)]}">',
+						'<tpl if="!Ext.isEmpty(topLeft)"><span class="tL" style="position: absolute; top: 0px; left: 0px; font-size: 0.5em;">{topLeft}</span></tpl>',
+            '<tpl if="!Ext.isEmpty(topRight)"><span class="tR" style="position: absolute; top: 0px; right: 0px; font-size: 0.5em;">{topRight}</span></tpl>',
+            '{date:date("j")}',
+            '<tpl if="!Ext.isEmpty(bottomLeft)"><span class="bL" style="position: absolute; bottom: 0px; left: 0px; font-size: 0.5em;">{bottomLeft}</span></tpl>' +
+            '<tpl if="!Ext.isEmpty(bottomRight)"><span class="bR" style="position: absolute; bottom: 0px; right: 0px; font-size: 0.5em;">{bottomRight}</span></tpl>' +
 						'</td>',
 						
 						'<tpl if="this.isEndOfRow(xindex)">',
@@ -286,6 +290,10 @@ Ext.ux.TouchCalendarView = Ext.extend(Ext.DataView, {
 					{name: 'prevMonth', type: 'boolean'},
 					{name: 'nextMonth', type: 'boolean'},
 					{name: 'weekend', type: 'boolean'},
+					{name: 'topRight', type: 'string'},
+					{name: 'topLeft', type: 'string'},
+					{name: 'bottomRight', type: 'string'},
+					{name: 'bottomLeft', type: 'string'},
 					'timeSlots'
 				]
 			});
@@ -357,7 +365,12 @@ Ext.ux.TouchCalendarView = Ext.extend(Ext.DataView, {
 				prevMonth: (iterDate.getMonth() < baseDate.getMonth()),
 				nextMonth: (iterDate.getMonth() > baseDate.getMonth()),
 				weekend: this.isWeekend(iterDate),
-				date: iterDate
+				date: iterDate,
+				topRight: 'tR',
+				topLeft: 'tL',
+				bottomRight: 'bR',
+				bottomLeft: 'bL',
+				color: 'yellow'
 			});
 		}
 		
@@ -772,9 +785,13 @@ Ext.ux.TouchCalendarView.DAY = {
 				'<tpl for=".">',
 					'<tr>',
 				
-						'<td class="time-block" datetime="{[this.me.getDateAttribute(values.date)]}">',
-
+						'<td class="time-block {color}" style="background-color: {color};" datetime="{[this.me.getDateAttribute(values.date)]}">',
+						  '<tpl if="!Ext.isEmpty(topLeft)"><span class="tL" style="position: absolute; top: 0px; left: 0px; font-size: 0.5em;">{topLeft}</span></tpl>',
+						  '<tpl if="!Ext.isEmpty(topRight)"><span class="tR" style="position: absolute; top: 0px; right: 0px; font-size: 0.5em;">{topRight}</span></tpl>',
 							'{date:date("H:i")}',
+							'<tpl if="!Ext.isEmpty(bottomLeft)"><span class="bL" style="position: absolute; bottom: 0px; left: 0px; font-size: 0.5em;">{bottomLeft}</span></tpl>' +
+	            '<tpl if="!Ext.isEmpty(bottomRight)"><span class="bR" style="position: absolute; bottom: 0px; right: 0px; font-size: 0.5em;">{bottomRight}</span></tpl>' +
+							
 						
 						'</td>',
 					'</tr>',

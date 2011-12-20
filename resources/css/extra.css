@@ -1,0 +1,18 @@
+.touch-calendar-view td.time-block {
+  background-image: none;
+	}
+.time-block.yellow {
+  background-color: yellow;
+}
+
+.touch-calendar-view td.time-block.red {
+  background-color: red;
+  font-color: #fff;
+}
+
+.time-block.blue {
+  background-color: blue;
+}
+.time-block.orange {
+  background-color: orange;
+}
